@@ -7,12 +7,15 @@ import (
 	"strings"
 )
 
-var BaseUrl = "https://chatmee.cn/api"
+const BaseUrl = "https://chatmee.cn"
 
-func CreateApiToken(apiKey string, userId string) (string, error) {
-	url := BaseUrl + "/user/createApiToken"
+func CreateApiToken(apiKey string, uid string, limit int) (string, error) {
+	url := BaseUrl + "/api/user/createApiToken"
 	reqData := map[string]interface{}{
-		"uid": userId,
+		"uid": uid,
+	}
+	if limit > 0 {
+		reqData["limit"] = limit
 	}
 	headers := map[string]string{
 		"Api-Key": apiKey,
@@ -37,7 +40,7 @@ func CreateApiToken(apiKey string, userId string) (string, error) {
 }
 
 func GenerateOutline(apiToken string, subject string, prompt string, dataUrl string) (string, error) {
-	url := BaseUrl + "/ppt/generateOutline"
+	url := BaseUrl + "/api/ppt/generateOutline"
 	reqData := map[string]interface{}{
 		"subject": subject,
 	}
@@ -88,7 +91,7 @@ func GenerateOutline(apiToken string, subject string, prompt string, dataUrl str
 }
 
 func GenerateContent(apiToken string, outlineMarkdown string, prompt string, dataUrl string) (string, error) {
-	url := BaseUrl + "/ppt/generateContent"
+	url := BaseUrl + "/api/ppt/generateContent"
 	reqData := map[string]interface{}{
 		"outlineMarkdown": outlineMarkdown,
 	}
@@ -139,7 +142,7 @@ func GenerateContent(apiToken string, outlineMarkdown string, prompt string, dat
 }
 
 func RandomOneTemplateId(apiToken string) (string, error) {
-	url := BaseUrl + "/ppt/randomTemplates"
+	url := BaseUrl + "/api/ppt/randomTemplates"
 	reqData := map[string]interface{}{
 		"size": 1,
 		"filters": map[string]interface{}{
@@ -169,7 +172,7 @@ func RandomOneTemplateId(apiToken string) (string, error) {
 }
 
 func GeneratePptx(apiToken string, templateId string, markdown string, pptxProperty bool) (map[string]interface{}, error) {
-	url := BaseUrl + "/ppt/generatePptx"
+	url := BaseUrl + "/api/ppt/generatePptx"
 	reqData := map[string]interface{}{
 		"outlineContentMarkdown": markdown,
 		"pptxProperty":           pptxProperty,
@@ -200,7 +203,7 @@ func GeneratePptx(apiToken string, templateId string, markdown string, pptxPrope
 }
 
 func DownloadPptx(apiToken string, id string) (string, error) {
-	url := BaseUrl + "/ppt/downloadPptx"
+	url := BaseUrl + "/api/ppt/downloadPptx"
 	reqData := map[string]interface{}{
 		"id": id,
 	}
@@ -227,7 +230,7 @@ func DownloadPptx(apiToken string, id string) (string, error) {
 }
 
 func DirectGeneratePptx(apiToken string, stream bool, templateId string, subject string, prompt string, dataUrl string, pptxProperty bool) (map[string]interface{}, error) {
-	url := BaseUrl + "/ppt/directGeneratePptx"
+	url := BaseUrl + "/api/ppt/directGeneratePptx"
 	reqData := map[string]interface{}{
 		"stream":       stream,
 		"pptxProperty": pptxProperty,

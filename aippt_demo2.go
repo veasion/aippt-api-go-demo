@@ -12,19 +12,19 @@ func main() {
 	// 开放平台 https://docmee.cn/open-platform/api
 
 	// 填写你的API-KEY
-	apiKey := "{{ YOUR API KEY }}"
+	apiKey := "YOUR API KEY"
 
 	// 第三方用户ID（数据隔离）
-	userId := "test"
+	uid := "test"
 	subject := "AI未来的发展"
 
-	// 创建 apiToken (有效期2小时，建议缓存到redis)
-	apiToken, err := CreateApiToken(apiKey, userId)
+	// 创建 api token (有效期2小时，建议缓存到redis，同一个 uid 创建时之前的 token 会在10秒内失效)
+	apiToken, err := CreateApiToken(apiKey, uid, -1)
 	if err != nil {
 		fmt.Println("异常:", err)
 		return
 	}
-	fmt.Println("apiToken: " + apiToken)
+	fmt.Println("api token: " + apiToken)
 
 	// 生成PPT
 	fmt.Println("\n\n========== 正在生成PPT ==========")
