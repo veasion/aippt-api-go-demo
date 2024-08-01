@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-const BaseUrl = "https://chatmee.cn"
+const BaseUrl = "https://docmee.cn"
 
 func CreateApiToken(apiKey string, uid string, limit int) (string, error) {
 	url := BaseUrl + "/api/user/createApiToken"
